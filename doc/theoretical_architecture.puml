@@ -1,0 +1,31 @@
+@startuml KataBowlingArchitecture
+
+title Bowling Game Kata
+
+class Game {
+    +roll(pins: int)
+    +score(): int
+}
+note bottom: The score function must\niterate through all the\nframes, and calculate\nall their scores.
+
+class Frame {
+    +score(): int
+}
+note top : The score for a spare or a strike\ndepends on the frame’s successor
+
+class "Tenth Frame" as TenthFrame {
+}
+note bottom : The tenth frame has two or three rolls.\nIt is different from all the other frames.
+
+Game -> Frame : has 10 >
+Frame -up-> Frame
+Frame <|-- TenthFrame
+
+class Roll {
+    -pins: int
+}
+
+TenthFrame --> Roll : may add 1 >
+Frame --> Roll : has 1..2 >
+
+@enduml
